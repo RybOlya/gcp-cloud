@@ -15,22 +15,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Access Environment Secrets
-      run: |
-        echo "DB_IP: ${{ env.DB_IP }}"
-        echo "DB_NAME: ${{ env.DB_NAME }}"
-        echo "DB_USERNAME: ${{ env.DB_USERNAME }}"
-        echo "DB_PASSWORD: ${{ env.DB_PASSWORD }}"
-
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Access Repository Secrets
+      run: |
+        echo "DB_IP: ${{ secrets.DB_IP }}"
+        echo "DB_NAME: ${{ secrets.DB_NAME }}"
+        echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
+        echo "DB_PASSWORD: ${{ secrets.DB_PASSWORD }}"
+
     - name: Build and test
       working-directory: ./back_end
-      run: mvn clean install -DDB_IP=${{ env.DB_IP}} -DDB_NAME=${{ env.DB_NAME}} -DDB_USERNAME=${{ env.DB_USERNAME}} -DDB_PASSWORD=${{ env.DB_PASSWORD}}
+      run: |
+        mvn clean install -DDB_IP=${{ secrets.DB_IP}} -DDB_NAME=${{ secrets.DB_NAME}} -DDB_USERNAME=${{ secrets.DB_USERNAME}} -DDB_PASSWORD=${{ secrets.DB_PASSWORD }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
