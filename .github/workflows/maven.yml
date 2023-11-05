@@ -26,6 +26,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build and test
+      working-directory: ./back_end
       run: mvn clean install -DDB_IP=${DB_IP} -DDB_NAME=${DB_NAME} -DDB_USERNAME=${DB_USERNAME} -DDB_PASSWORD=${DB_PASSWORD}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
