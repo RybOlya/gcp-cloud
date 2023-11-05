@@ -11,23 +11,26 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      DB_IP: ${{ secrets.DB_IP }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Access Environment Secrets
+      run: |
+        echo "DB_IP: ${{ env.back_end.DB_IP }}"
+        echo "DB_NAME: ${{ env.back_end.DB_NAME }}"
+        echo "DB_USERNAME: ${{ env.back_end.DB_USERNAME }}"
+        echo "DB_PASSWORD: ${{ env.back_end.DB_PASSWORD }}"
+
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Build and test
       working-directory: ./back_end
-      run: mvn clean install -DDB_IP=${DB_IP} -DDB_NAME=${DB_NAME} -DDB_USERNAME=${DB_USERNAME} -DDB_PASSWORD=${DB_PASSWORD}
+      run: mvn clean install -DDB_IP=${{ env.back_end.DB_IP}} -DDB_NAME=${{ env.back_end.DB_NAME}} -DDB_USERNAME=${{ env.back_end.DB_USERNAME}} -DDB_PASSWORD=${{ env.back_end.DB_PASSWORD}}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
