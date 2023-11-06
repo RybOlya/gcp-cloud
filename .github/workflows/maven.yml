@@ -19,10 +19,8 @@ jobs:
 
     - name: Replace placeholders in application.yml
       run: |
-        sed -i "s~\${{ secrets.DB_IP }}~$DB_IP~g" ./back_end/src/main/resources/application.yml
-        sed -i "s~\${{ secrets.DB_NAME }}~$DB_NAME~g" ./back_end/src/main/resources/application.yml
-        sed -i "s~\${{ secrets.DB_USERNAME }}~$DB_USERNAME~g" ./back_end/src/main/resources/application.yml
-        sed -i "s~\${{ secrets.DB_PASSWORD }}~$DB_PASSWORD~g" ./back_end/src/main/resources/application.yml
+        sed -e "s/\${{ secrets.DB_IP }}/$DB_IP/g" -e "s/\${{ secrets.DB_NAME }}/$DB_NAME/g" -e "s/\${{ secrets.DB_USERNAME }}/$DB_USERNAME/g" -e "s/\${{ secrets.DB_PASSWORD }}/$DB_PASSWORD/g" < ./back_end/src/main/resources/application.yml > ./back_end/src/main/resources/application_updated.yml
+        mv ./back_end/src/main/resources/application_updated.yml ./back_end/src/main/resources/application.yml
 
     - name: Set up JDK 17
       uses: actions/setup-java@v2
