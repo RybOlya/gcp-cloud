@@ -11,19 +11,19 @@ jobs:
 
     runs-on: ubuntu-latest
 
-
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Print Environment Variables
+      run: |
+        echo "DB_IP: ${{ secrets.DB_IP }}"
+        echo "DB_NAME: ${{ secrets.DB_NAME }}"
+        echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
+        echo "DB_PASSWORD: ${{ secrets.DB_PASSWORD }}"
+        
     - name: Replace placeholders in application.yml
       run: |
-        export DB_IP="${{ secrets.DB_IP }}"
-        export DB_NAME="${{ secrets.DB_NAME }}"
-        export DB_USERNAME="${{ secrets.DB_USERNAME }}"
-        export DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
-
         envsubst < ./back_end/src/main/resources/application.yml > ./back_end/src/main/resources/application.yml
 
     - name: Set up JDK 17
