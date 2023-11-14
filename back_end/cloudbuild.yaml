@@ -4,4 +4,4 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh backend-vm --zone=europe-north1-a --command='bash -s' < ~/pull.sh
+        gcloud compute ssh backend-vm --zone=europe-north1-a --command='/bin/sh /home/orybe/pull.sh'
