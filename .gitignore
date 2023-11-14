@@ -26,5 +26,3 @@ hs_err_pid*
 *.iml
 *target/classes/META-INF/MANIFEST.MF
 
-# Ignore the pull.sh script
-back_end/pull.sh
