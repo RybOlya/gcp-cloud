@@ -20,7 +20,7 @@ EXPOSE 9000
 
 WORKDIR ./
 
-COPY --from=stage1 target/app.jar ./app.jar
+COPY --from=stage1 target/*.jar ./app.jar
 
 CMD java -jar ./app.jar
 
