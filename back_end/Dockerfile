@@ -1,5 +1,5 @@
 # Stage 1
-FROM maven:3.8.5-openjdk-11 as stage1
+FROM maven:3.9.5-eclipse-temurin-17 as stage1
 
 ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 
@@ -14,7 +14,7 @@ COPY src ./src
 RUN mvn clean install -Dmaven.test.skip=true
 
 # Stage 2
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM eclipse-temurin:17.0.8.1_1-jre
 
 EXPOSE 9000
 
